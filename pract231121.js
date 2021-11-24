@@ -11,14 +11,15 @@ document
             const value = values[index].innerText;
             const url = URLs[index].innerText;
         
-            const resp = await fetch(url + value +'/' + option);
-            const fetchResult = await resp.text();
+            const fetchResult = await fetch(url + value +'/' + option).then(
+              response => response.text()
+            );
         
             const searchingTag = '<span>';
             const searchingTagEnd = '</span>';
-            const answerStartIndex = await fetchResult.search(searchingTag) + searchingTag.length;
-            const answerEndIndex = await fetchResult.search(searchingTagEnd);
-            const answer = await fetchResult.slice(answerStartIndex, answerEndIndex);
+            const answerStartIndex = fetchResult.search(searchingTag) + searchingTag.length;
+            const answerEndIndex = fetchResult.search(searchingTagEnd);
+            const answer = fetchResult.slice(answerStartIndex, answerEndIndex);
         
             option = '' + answer;
             result += answer;
